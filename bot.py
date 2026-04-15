@@ -13,6 +13,7 @@ from ozon_client import OzonClient
 from classifier import classify_review
 from llm_client import LLMClient
 from telegram_handler import bot, dp, send_review_to_chat
+from template_manager import router as template_router
 
 # ──────────────── Логирование ────────────────
 
@@ -110,6 +111,9 @@ async def main():
 
     # Первый опрос сразу при старте
     asyncio.create_task(poll_reviews())
+
+    # Подключаем роутер управления шаблонами
+    dp.include_router(template_router)
 
     # Telegram
     await dp.start_polling(bot)

@@ -189,20 +189,114 @@ async def cb_skip(callback: CallbackQuery):
 
 # ──────────────── Команды ────────────────
 
-@dp.message(Command("start", "help"))
-async def cmd_help(message: Message):
+def _main_menu_keyboard() -> InlineKeyboardMarkup:
+    stats = st.get_stats()
+    mode = stats["mode"]
+    mode_label = "🤖 Авто" if mode == "auto" else "👤 Полуавто"
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text="📋 Шаблоны",             callback_data="menu:templates")],
+        [
+            InlineKeyboardButton(text=f"⚙️ Режим: {mode_label}", callback_data="menu:mode"),
+            InlineKeyboardButton(text="📊 Статистика",           callback_data="menu:stats"),
+        ],
+        [InlineKeyboardButton(text="🔄 Проверить отзывы",    callback_data="menu:poll")],
+    ])
+
+
+@dp.message(Command("start", "help", "menu"))
+async def cmd_menu(message: Message):
     await message.reply(
-        "🤖 *Бот ответов на отзывы Ozon*\n\n"
-        "*/mode* — показать или сменить режим работы\n"
-        "*/stats* — статистика\n"
-        "*/poll* — запустить проверку отзывов вручную\n"
-        "*/cancel* — отменить ввод текста\n"
-        "*/help* — эта справка\n\n"
-        "Режимы:\n"
-        "🤖 *auto* — бот сам отправляет ответы, уведомляет вас\n"
-        "👤 *semi* — бот предлагает ответ, вы подтверждаете",
+        "🤖 *Бот ответов на отзывы Ozon*\n\nВыбери действие:",
+        parse_mode="Markdown",
+        reply_markup=_main_menu_keyboard(),
+    )
+
+
+@dp.callback_query(F.data == "menu:templates")
+async def cb_menu_templates(callback: CallbackQuery):
+    """Перенаправляет в менеджер шаблонов (обрабатывается в template_manager.py)."""
+    from template_manager import _kb_list, _load as tmpl_load
+    templates = tmpl_load()
+    await callback.message.edit_text(
+        f"📋 *Шаблоны ответов* — всего {len(templates)}\n\nВыбери для просмотра или редактирования:",
+        parse_mode="Markdown",
+        reply_markup=_kb_list(),
+    )
+    await callback.answer()
+
+
+@dp.callback_query(F.data == "menu:mode")
+async def cb_menu_mode(callback: CallbackQuery):
+    current = st.get_mode()
+    await callback.message.edit_text(
+        f"⚙️ *Режим работы*\n\nТекущий: *{'🤖 авто' if current == 'auto' else '👤 полуавто'}*",
+        parse_mode="Markdown",
+        reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+            [
+                InlineKeyboardButton(text="🤖 Авто",     callback_data="menu:setmode:auto"),
+                InlineKeyboardButton(text="👤 Полуавто", callback_data="menu:setmode:semi"),
+            ],
+            [InlineKeyboardButton(text="◀️ Назад", callback_data="menu:back")],
+        ]),
+    )
+    await callback.answer()
+
+
+@dp.callback_query(F.data.startswith("menu:setmode:"))
+async def cb_menu_setmode(callback: CallbackQuery):
+    new_mode = callback.data.split(":")[-1]
+    st.set_mode(new_mode)
+    emoji = "🤖" if new_mode == "auto" else "👤"
+    await callback.answer(f"{emoji} Режим переключён на {new_mode}")
+    await callback.message.edit_text(
+        "🤖 *Бот ответов на отзывы Ozon*\n\nВыбери действие:",
+        parse_mode="Markdown",
+        reply_markup=_main_menu_keyboard(),
+    )
+
+
+@dp.callback_query(F.data == "menu:stats")
+async def cb_menu_stats(callback: CallbackQuery):
+    stats = st.get_stats()
+    emoji = "🤖" if stats["mode"] == "auto" else "👤"
+    await callback.message.edit_text(
+        f"📊 *Статистика*\n\n"
+        f"Режим: {emoji} {stats['mode']}\n"
+        f"Обработано отзывов: {stats['processed']}\n"
+        f"Ожидают подтверждения: {stats['pending']}",
+        parse_mode="Markdown",
+        reply_markup=InlineKeyboardMarkup(inline_keyboard=[
+            [InlineKeyboardButton(text="◀️ Назад", callback_data="menu:back")]
+        ]),
+    )
+    await callback.answer()
+
+
+@dp.callback_query(F.data == "menu:poll")
+async def cb_menu_poll(callback: CallbackQuery):
+    await callback.answer("🔄 Запускаю проверку...")
+    await callback.message.edit_text(
+        "🔄 Проверяю новые отзывы...",
         parse_mode="Markdown",
     )
+    # Импорт здесь чтобы избежать циклической зависимости
+    from bot import poll_reviews
+    await poll_reviews()
+    await callback.message.edit_text(
+        "✅ Проверка завершена!\n\nВыбери действие:",
+        parse_mode="Markdown",
+        reply_markup=_main_menu_keyboard(),
+    )
+
+
+@dp.callback_query(F.data == "menu:back")
+async def cb_menu_back(callback: CallbackQuery):
+    await callback.message.edit_text(
+        "🤖 *Бот ответов на отзывы Ozon*\n\nВыбери действие:",
+        parse_mode="Markdown",
+        reply_markup=_main_menu_keyboard(),
+    )
+    await callback.answer()
 
 
 @dp.message(Command("mode"))
@@ -211,11 +305,10 @@ async def cmd_mode(message: Message):
     current = st.get_mode()
 
     if len(args) < 2:
-        emoji = "🤖" if current == "auto" else "👤"
         await message.reply(
-            f"Текущий режим: {emoji} *{current}*\n\n"
-            "Сменить:\n`/mode auto` — автоматический\n`/mode semi` — полуавтоматический",
+            "🤖 *Бот ответов на отзывы Ozon*\n\nВыбери действие:",
             parse_mode="Markdown",
+            reply_markup=_main_menu_keyboard(),
         )
         return
 

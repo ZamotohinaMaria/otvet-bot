@@ -9,6 +9,13 @@ _TEMPLATES_PATH = Path(__file__).parent / "templates.json"
 with open(_TEMPLATES_PATH, "r", encoding="utf-8") as _f:
     TEMPLATES: dict = json.load(_f)
 
+
+def reload():
+    """Перечитывает templates.json — вызывать после любого изменения шаблонов."""
+    global TEMPLATES
+    with open(_TEMPLATES_PATH, "r", encoding="utf-8") as f:
+        TEMPLATES = json.load(f)
+
 # Слова-сигналы сложного отзыва
 _COMPLEX_KEYWORDS = [
     "возврат", "вернуть", "возврата", "возвращу",
@@ -115,12 +122,13 @@ def classify_review(review: dict, llm_client=None) -> tuple[str | None, str | No
         logger.info("Отзыв %s → шаблон '%s' (по правилам)", review.get("uuid", "?"), key)
         return key, pick_response(key)
 
-    # Уровень 2: LLM
-    if llm_client:
-        key = llm_client.classify(review.get("text", ""), TEMPLATES)
-        if key:
-            logger.info("Отзыв %s → шаблон '%s' (LLM)", review.get("uuid", "?"), key)
-            return key, pick_response(key)
+    # Уровень 2: LLM (отключён — раскомментируй когда будет API-ключ)
+    # if llm_client:
+    #     key = llm_client.classify(review.get("text", ""), TEMPLATES)
+    #     if key:
+    #         logger.info("Отзыв %s → шаблон '%s' (LLM)", review.get("uuid", "?"), key)
+    #         return key, pick_response(key)
 
-    logger.info("Отзыв %s — сложный (нет подходящего шаблона)", review.get("uuid", "?"))
-    return None, None
+    # Запасной шаблон — подходит для любого отзыва без явных жалоб
+    logger.info("Отзыв %s → шаблон 'fallback_general' (запасной)", review.get("uuid", "?"))
+    return "fallback_general", pick_response("fallback_general")
