@@ -17,12 +17,19 @@ from aiogram.types import (
 )
 
 import state as st
-from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, TELEGRAM_PROXY
 from ozon_client import OzonClient
 
 logger = logging.getLogger(__name__)
 
-bot = Bot(token=TELEGRAM_BOT_TOKEN)
+if TELEGRAM_PROXY:
+    from aiogram.client.session.aiohttp import AiohttpSession
+    _session = AiohttpSession(proxy=TELEGRAM_PROXY)
+    bot = Bot(token=TELEGRAM_BOT_TOKEN, session=_session)
+    logger.info("Telegram использует прокси: %s", TELEGRAM_PROXY)
+else:
+    bot = Bot(token=TELEGRAM_BOT_TOKEN)
+
 dp = Dispatcher(storage=MemoryStorage())
 ozon = OzonClient()
 

@@ -1,0 +1,56 @@
+2026-04-15 19:41:30,745 [INFO] __main__: Бот запущен | режим: semi | интервал: 15 мин | LLM: отключён
+2026-04-15 19:41:30,998 [INFO] apscheduler.scheduler: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-04-15 19:41:31,000 [INFO] apscheduler.scheduler: Added job "poll_reviews" to job store "default"
+2026-04-15 19:41:31,000 [INFO] apscheduler.scheduler: Scheduler started
+2026-04-15 19:41:31,001 [INFO] aiogram.dispatcher: Start polling
+2026-04-15 19:41:31,003 [INFO] __main__: Проверяю новые отзывы...
+2026-04-15 19:41:31,082 [ERROR] ozon_client: Ошибка при получении отзывов: 400 Client Error: Bad Request for url: https://api-seller.ozon.ru/v1/review/list
+2026-04-15 19:41:31,083 [INFO] __main__: Новых отзывов нет
+2026-04-15 19:41:31,531 [INFO] aiogram.dispatcher: Run polling for bot @tekna_feedback_bot id=8641063116 - 'Tekna-feedback-bot'
+2026-04-15 19:41:31,750 [INFO] aiogram.event: Update id=919407062 is not handled. Duration 0 ms by bot id=8641063116
+2026-04-15 19:41:31,753 [INFO] aiogram.event: Update id=919407063 is not handled. Duration 0 ms by bot id=8641063116
+2026-04-15 19:43:16,930 [INFO] aiogram.event: Update id=919407064 is handled. Duration 360 ms by bot id=8641063116
+2026-04-15 19:44:31,376 [INFO] aiogram.event: Update id=919407065 is handled. Duration 343 ms by bot id=8641063116
+2026-04-15 19:45:09,912 [INFO] aiogram.dispatcher: Polling stopped
+2026-04-15 19:45:10,164 [INFO] aiogram.dispatcher: Polling stopped for bot @tekna_feedback_bot id=8641063116 - 'Tekna-feedback-bot'
+2026-04-15 19:45:16,229 [INFO] __main__: Бот запущен | режим: semi | интервал: 15 мин | LLM: отключён
+2026-04-15 19:45:16,291 [INFO] apscheduler.scheduler: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-04-15 19:45:16,293 [INFO] apscheduler.scheduler: Added job "poll_reviews" to job store "default"
+2026-04-15 19:45:16,293 [INFO] apscheduler.scheduler: Scheduler started
+2026-04-15 19:45:16,293 [INFO] aiogram.dispatcher: Start polling
+2026-04-15 19:45:16,295 [INFO] __main__: Проверяю новые отзывы...
+2026-04-15 19:45:16,378 [ERROR] ozon_client: Ошибка при получении отзывов: 403 Client Error: Forbidden for url: https://api-seller.ozon.ru/v1/review/list
+2026-04-15 19:45:16,379 [INFO] __main__: Новых отзывов нет
+2026-04-15 19:45:16,833 [INFO] aiogram.dispatcher: Run polling for bot @tekna_feedback_bot id=8641063116 - 'Tekna-feedback-bot'
+2026-04-15 19:49:47,974 [INFO] aiogram.dispatcher: Polling stopped
+2026-04-15 19:49:48,226 [INFO] aiogram.dispatcher: Polling stopped for bot @tekna_feedback_bot id=8641063116 - 'Tekna-feedback-bot'
+2026-04-15 19:50:10,782 [INFO] __main__: Бот запущен | режим: semi | интервал: 15 мин | LLM: отключён
+2026-04-15 19:50:10,843 [INFO] apscheduler.scheduler: Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-04-15 19:50:10,846 [INFO] apscheduler.scheduler: Added job "poll_reviews" to job store "default"
+2026-04-15 19:50:10,846 [INFO] apscheduler.scheduler: Scheduler started
+2026-04-15 19:50:10,846 [INFO] aiogram.dispatcher: Start polling
+2026-04-15 19:50:10,847 [INFO] __main__: Проверяю новые отзывы...
+2026-04-15 19:50:10,936 [ERROR] ozon_client: Ошибка при получении отзывов: 403 Client Error: Forbidden for url: https://api-seller.ozon.ru/v1/review/list
+2026-04-15 19:50:10,937 [INFO] __main__: Новых отзывов нет
+2026-04-15 19:50:11,406 [INFO] aiogram.dispatcher: Run polling for bot @tekna_feedback_bot id=8641063116 - 'Tekna-feedback-bot'
+2026-04-15 19:50:12,035 [INFO] aiogram.event: Update id=919407066 is handled. Duration 375 ms by bot id=8641063116
+2026-04-15 19:50:12,189 [INFO] bot: Проверяю новые отзывы...
+2026-04-15 19:50:12,272 [ERROR] ozon_client: Ошибка при получении отзывов: 403 Client Error: Forbidden for url: https://api-seller.ozon.ru/v1/review/list
+2026-04-15 19:50:12,273 [INFO] bot: Новых отзывов нет
+2026-04-15 19:50:12,463 [INFO] aiogram.event: Update id=919407067 is handled. Duration 796 ms by bot id=8641063116
+2026-04-15 19:50:14,440 [INFO] bot: Проверяю новые отзывы...
+2026-04-15 19:50:14,518 [ERROR] ozon_client: Ошибка при получении отзывов: 403 Client Error: Forbidden for url: https://api-seller.ozon.ru/v1/review/list
+2026-04-15 19:50:14,519 [INFO] bot: Новых отзывов нет
+2026-04-15 19:50:14,670 [INFO] aiogram.event: Update id=919407068 is handled. Duration 547 ms by bot id=8641063116
+2026-04-15 19:50:21,130 [INFO] bot: Проверяю новые отзывы...
+2026-04-15 19:50:21,209 [ERROR] ozon_client: Ошибка при получении отзывов: 403 Client Error: Forbidden for url: https://api-seller.ozon.ru/v1/review/list
+2026-04-15 19:50:21,210 [INFO] bot: Новых отзывов нет
+2026-04-15 19:50:21,382 [INFO] aiogram.event: Update id=919407069 is handled. Duration 671 ms by bot id=8641063116
+2026-04-15 19:51:46,706 [ERROR] aiogram.dispatcher: Failed to fetch updates - TelegramNetworkError: HTTP Client says - ServerDisconnectedError: Server disconnected
+2026-04-15 19:51:46,710 [WARNING] aiogram.dispatcher: Sleep for 1.000000 seconds and try again... (tryings = 0, bot id = 8641063116)
+2026-04-15 19:52:08,739 [ERROR] aiogram.dispatcher: Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Multiple exceptions: [WinError 1231] Сетевая папка недоступна. За информацией о разрешении проблем в сети обратитесь к справочной системе Windows, [WinError 121] Превышен таймаут семафора]
+2026-04-15 19:52:08,740 [WARNING] aiogram.dispatcher: Sleep for 1.294608 seconds and try again... (tryings = 1, bot id = 8641063116)
+2026-04-15 19:52:31,086 [ERROR] aiogram.dispatcher: Failed to fetch updates - TelegramNetworkError: HTTP Client says - ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [Multiple exceptions: [WinError 121] Превышен таймаут семафора, [WinError 1231] Сетевая папка недоступна. За информацией о разрешении проблем в сети обратитесь к справочной системе Windows]
+2026-04-15 19:52:31,086 [WARNING] aiogram.dispatcher: Sleep for 1.834988 seconds and try again... (tryings = 2, bot id = 8641063116)
+2026-04-15 19:52:35,427 [INFO] aiogram.dispatcher: Polling stopped
+2026-04-15 19:52:35,688 [INFO] aiogram.dispatcher: Polling stopped for bot @tekna_feedback_bot id=8641063116 - 'Tekna-feedback-bot'

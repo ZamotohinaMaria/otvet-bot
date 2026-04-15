@@ -8,6 +8,7 @@ OZON_API_KEY: str = os.getenv("OZON_API_KEY", "")
 
 TELEGRAM_BOT_TOKEN: str = os.getenv("TELEGRAM_BOT_TOKEN", "")
 TELEGRAM_CHAT_ID: int = int(os.getenv("TELEGRAM_CHAT_ID", "0"))
+TELEGRAM_PROXY: str = os.getenv("TELEGRAM_PROXY", "")  # socks5://host:port или http://host:port
 
 LLM_PROVIDER: str = os.getenv("LLM_PROVIDER", "deepseek")   # deepseek | openai | claude
 LLM_API_KEY: str = os.getenv("LLM_API_KEY", "")
