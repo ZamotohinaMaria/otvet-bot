@@ -8,3 +8,10 @@ python bot.py
 отдельная конфиг папка
 структурировать папочки красиво
 обернуть все в приложение .exe
+
+Для LLM:
+
+teknaline.office@gmail.com
+Samaratekna163!
+
+https://platform.deepseek.com/usage 
