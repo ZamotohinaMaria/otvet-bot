@@ -15,3 +15,17 @@ teknaline.office@gmail.com
 Samaratekna163!
 
 https://platform.deepseek.com/usage 
+
+Парсеры:
+
+Парсер характеристик:
+
+python parser/volume_characteristics_parser.py
+python parser/volume_characteristics_parser.py --output parser/my_volume.csv
+
+Парсер отзывов:
+
+python parser/reviews_parser.py
+python parser/reviews_parser.py --only-unanswered
+python parser/reviews_parser.py --only-answered
+python parser/reviews_parser.py --output parser/reviews_export.csv --limit 100 --max-pages 20000
