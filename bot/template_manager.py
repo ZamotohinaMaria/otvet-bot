@@ -18,7 +18,7 @@ from aiogram.types import (
     Message,
 )
 
-import classifier
+import bot.classifier as classifier
 
 logger = logging.getLogger(__name__)
 router = Router()

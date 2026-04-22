@@ -7,13 +7,13 @@ from logging.handlers import RotatingFileHandler
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-import state as st
-from config import MODE, POLL_INTERVAL_MINUTES, LLM_API_KEY
-from ozon_client import OzonClient
-from classifier import classify_review
-from llm_client import LLMClient
-from telegram_handler import bot, dp, send_review_to_chat
-from template_manager import router as template_router
+import bot.state as st
+from bot.config import MODE, POLL_INTERVAL_MINUTES, LLM_API_KEY
+from bot.ozon_client import OzonClient
+from bot.classifier import classify_review
+from bot.llm_client import LLMClient
+from bot.telegram_handler import bot, dp, send_review_to_chat
+from bot.template_manager import router as template_router
 
 # ──────────────── Логирование ────────────────
 
@@ -78,7 +78,7 @@ async def poll_reviews():
 
 from aiogram.filters import Command
 from aiogram.types import Message
-from telegram_handler import dp as _dp
+from bot.telegram_handler import dp as _dp
 
 
 @_dp.message(Command("poll"))

@@ -16,9 +16,9 @@ from aiogram.types import (
     Message,
 )
 
-import state as st
-from config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, TELEGRAM_PROXY
-from ozon_client import OzonClient
+import bot.state as st
+from bot.config import TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, TELEGRAM_PROXY
+from bot.ozon_client import OzonClient
 
 logger = logging.getLogger(__name__)
 
@@ -222,7 +222,7 @@ async def cmd_menu(message: Message):
 @dp.callback_query(F.data == "menu:templates")
 async def cb_menu_templates(callback: CallbackQuery):
     """Перенаправляет в менеджер шаблонов (обрабатывается в template_manager.py)."""
-    from template_manager import _kb_list, _load as tmpl_load
+    from bot.template_manager import _kb_list, _load as tmpl_load
     templates = tmpl_load()
     await callback.message.edit_text(
         f"📋 *Шаблоны ответов* — всего {len(templates)}\n\nВыбери для просмотра или редактирования:",
@@ -287,7 +287,7 @@ async def cb_menu_poll(callback: CallbackQuery):
         parse_mode="Markdown",
     )
     # Импорт здесь чтобы избежать циклической зависимости
-    from bot import poll_reviews
+    from bot.bot import poll_reviews
     await poll_reviews()
     await callback.message.edit_text(
         "✅ Проверка завершена!\n\nВыбери действие:",

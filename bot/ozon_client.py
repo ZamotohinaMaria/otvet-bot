@@ -1,6 +1,6 @@
 import logging
 import requests
-from config import OZON_CLIENT_ID, OZON_API_KEY, DRY_RUN
+from bot.config import OZON_CLIENT_ID, OZON_API_KEY, DRY_RUN
 
 BASE_URL = "https://api-seller.ozon.ru"
 logger = logging.getLogger(__name__)

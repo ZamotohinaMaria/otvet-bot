@@ -1,6 +1,7 @@
 ﻿import argparse
 import csv
 import os
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -13,6 +14,10 @@ REVIEWS_LIST_ENDPOINT = "/v1/review/list"
 DEFAULT_OUTPUT = Path(__file__).resolve().parent / "reviews.csv"
 MIN_LIMIT = 20
 MAX_LIMIT = 100
+
+
+class OzonSubscriptionError(RuntimeError):
+    """Метод недоступен на текущей подписке Ozon."""
 
 
 @dataclass
@@ -51,6 +56,15 @@ class OzonReviewsParser:
             response.raise_for_status()
         except requests.HTTPError as exc:
             tail = (response.text or "").strip()[:500]
+            if response.status_code == 403 and "subscription" in tail.lower():
+                raise OzonSubscriptionError(
+                    "Ozon API вернул 403: метод отзывов недоступен для текущей подписки.\n"
+                    "Что проверить в кабинете Ozon:\n"
+                    "1) Подписка/тариф с доступом к API отзывов.\n"
+                    "2) Права API-ключа (доступ к отзывам).\n"
+                    "3) Что ключ выпущен для нужного кабинета продавца.\n"
+                    f"Детали API: endpoint={endpoint} | response={tail}"
+                ) from exc
             raise requests.HTTPError(
                 f"{exc} | endpoint={endpoint} | response={tail}",
                 response=response,
@@ -325,11 +339,15 @@ def main() -> None:
         is_answered = True
 
     parser = OzonReviewsParser(client_id=client_id, api_key=api_key)
-    reviews = parser.list_reviews(
-        limit=normalized_limit,
-        max_pages=args.max_pages,
-        is_answered=is_answered,
-    )
+    try:
+        reviews = parser.list_reviews(
+            limit=normalized_limit,
+            max_pages=args.max_pages,
+            is_answered=is_answered,
+        )
+    except OzonSubscriptionError as exc:
+        print(str(exc))
+        sys.exit(2)
 
     rows = build_rows(reviews)
     save_csv(rows, args.output)

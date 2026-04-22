@@ -1,5 +1,5 @@
 import logging
-from config import LLM_PROVIDER, LLM_API_KEY
+from bot.config import LLM_PROVIDER, LLM_API_KEY
 
 logger = logging.getLogger(__name__)
 
